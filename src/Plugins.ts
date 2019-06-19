@@ -3,42 +3,38 @@ import Debug from 'debug'
 import {GraphQLError, formatError} from 'graphql'
 import {GraphQLErrorExtended} from 'postgraphile'
 
-import AppointmentResolver from './appointments/AppointmentResolver'
-import MessageResolver from './messages/MessageResolver'
 import {Environment} from './Config'
 
 const debug = Debug('space-unicorn:Plugins')
 
-export async function pgSettings (req: Request) {
+export async function pgSettings(req: Request) {
   const sub = req.user && req.user.sub
 
   return {
     'jwt.claims.sub': sub,
-    role: 'allay_user'
+    role: 'allay_user',
   }
 }
 
-export const plugins = [
-  AppointmentResolver.createAppointment,
-  MessageResolver.markMessagesRead
-]
+export const plugins = []
 
-export const handleErrors = (errors: GraphQLError[]) => errors.map((error: GraphQLError) => {
-  const formattedError = formatError(error) as GraphQLErrorExtended
+export const handleErrors = (errors: readonly GraphQLError[]) =>
+  errors.map((error: GraphQLError) => {
+    const formattedError = formatError(error) as GraphQLErrorExtended
 
-  // If this is dev, add the stack to the formatted error.
-  if (Environment.isDev) {
-    debug(error)
+    // If this is dev, add the stack to the formatted error.
+    if (Environment.isDev) {
+      debug(error)
 
-    // @ts-ignore - dev-only
-    formattedError.stack = error.stack
-  }
+      // @ts-ignore - dev-only
+      formattedError.stack = error.stack
+    }
 
-  return formattedError
-})
+    return formattedError
+  })
 
 export default {
   pgSettings,
   plugins,
-  handleErrors
+  handleErrors,
 }

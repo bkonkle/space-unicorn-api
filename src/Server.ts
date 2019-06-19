@@ -13,7 +13,7 @@ import {MiddlewareOptions as PlaygroundOptions} from 'graphql-playground-html'
 import {Database, Server, Auth, Environment} from './Config'
 import Plugins from './Plugins'
 
-export async function create () {
+export async function create() {
   const app = express()
 
   const jwtCheck = jwt({
@@ -21,31 +21,31 @@ export async function create () {
       cache: true,
       rateLimit: true,
       jwksRequestsPerMinute: 5,
-      jwksUri: Auth.jwksUri
+      jwksUri: Auth.jwksUri,
     }),
     audience: Auth.audience,
     issuer: Auth.issuer,
     algorithms: ['RS256'],
-    credentialsRequired: false
+    credentialsRequired: false,
   })
 
   const options: PostGraphileOptions = {
     appendPlugins: Plugins.plugins,
     // @ts-ignore - express vs plain http
     additionalGraphQLContextFromRequest: async (req: Request) => ({
-      user: req.user
+      user: req.user,
     }),
     handleErrors: Plugins.handleErrors,
     // @ts-ignore - express vs plain http
-    pgSettings: Plugins.pgSettings
+    pgSettings: Plugins.pgSettings,
   }
 
   const playgroundOpts: PlaygroundOptions = {
     endpoint: '/graphql',
     settings: {
       // @ts-ignore - incomplete type
-      'schema.polling.enable': false
-    }
+      'schema.polling.enable': false,
+    },
   }
 
   app
@@ -67,16 +67,20 @@ export async function create () {
   return app
 }
 
-export async function main () {
+export async function main() {
   let app = await create()
 
   const server = http.createServer(app)
 
   server.listen(Server.port, () => {
-    console.log(chalk.cyan(`> Started API on port ${chalk.yellow(Server.port.toString())}`))
+    console.log(
+      chalk.cyan(
+        `> Started API on port ${chalk.yellow(Server.port.toString())}`
+      )
+    )
   })
 
-  function replaceApp (newApp: Express) {
+  function replaceApp(newApp: Express) {
     server.removeListener('request', app)
     server.on('request', newApp)
     app = newApp

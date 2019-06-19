@@ -9,8 +9,8 @@
   "author": "Brandon Konkle <brandon@konkle.us> (https://deterministic.dev)",
   "license": "MIT",
   "scripts": {
-    "lint": "xo",
-    "format": "xo --fix",
+    "format": "prettier --write",
+    "format.all": "yarn format \"src/*.{js,jsx,ts,tsx}\"",
     "check.types": "tsc --pretty --noEmit --skipLibCheck",
     "db.migrate": "knex migrate:latest",
     "db.reset": "dropdb unicorn && createdb unicorn -O unicorn_root && yarn db.migrate",
@@ -18,6 +18,7 @@
     "dev": "yarn dev.watch.debug",
     "dev.run": "NODE_ENV=development ts-node --transpile-only src/index.ts",
     "dev.debug": "DEBUG=unicorn-api:*,graphile-build:* yarn dev.run",
+    "dev.models": "graphql-codegen",
     "dev.watch": "nodemon --exec yarn dev.run",
     "dev.watch.debug": "DEBUG=unicorn-api:*,graphile-build:* yarn dev.watch",
     "test.watch": "NODE_ENV=test jest --watch",
@@ -50,6 +51,10 @@
     "to-snake-case": "^1.0.0"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^1.2.1",
+    "@graphql-codegen/typescript": "^1.2.1",
+    "@graphql-codegen/typescript-operations": "^1.2.1",
+    "@graphql-codegen/typescript-resolvers": "^1.2.1",
     "@types/debug": "^4.1.4",
     "@types/dotenv": "^6.1.1",
     "@types/express-jwt": "^0.0.42",
@@ -60,14 +65,8 @@
     "@types/ramda": "^0.26.9",
     "@types/react": "^16.8.20",
     "@types/to-snake-case": "^1.0.0",
-    "@typescript-eslint/eslint-plugin": "^1.10.2",
-    "@typescript-eslint/parser": "^1.10.2",
     "debug": "^4.1.1",
     "dotenv-cli": "^2.0.0",
-    "eslint-config-xo-react": "^0.19.0",
-    "eslint-config-xo-typescript": "^0.14.0",
-    "eslint-plugin-react": "^7.13.0",
-    "eslint-plugin-react-hooks": "^1.6.0",
     "husky": "^2.4.1",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.8.0",
@@ -76,62 +75,6 @@
     "prettier": "^1.18.2",
     "ts-jest": "^24.0.2",
     "ts-node": "^8.3.0",
-    "typescript": "^3.5.2",
-    "xo": "^0.24.0"
-  },
-  "xo": {
-    "extends": [
-      "xo-typescript",
-      "xo-react"
-    ],
-    "extensions": [
-      "ts",
-      "tsx"
-    ],
-    "ignores": [
-      "**/*.d.ts"
-    ],
-    "rules": {
-      "unicorn/filename-case": [
-        "error",
-        {
-          "case": "pascalCase"
-        }
-      ],
-      "@typescript-eslint/explicit-function-return-type": [
-        "off"
-      ],
-      "@typescript-eslint/semi": [
-        "error",
-        "never"
-      ],
-      "@typescript-eslint/indent": [
-        "error",
-        2
-      ],
-      "@typescript-eslint/member-delimiter-style": [
-        "error",
-        {
-          "multiline": {
-            "delimiter": "none"
-          },
-          "singleline": {
-            "delimiter": "semi",
-            "requireLast": false
-          }
-        }
-      ],
-      "space-before-function-paren": [
-        "error",
-        "always"
-      ],
-      "react/jsx-indent": [
-        "error",
-        2
-      ],
-      "import/no-named-as-default-member": [
-        "off"
-      ]
-    }
+    "typescript": "^3.5.2"
   }
 }

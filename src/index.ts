@@ -8,12 +8,12 @@ declare global {
    */
   interface NodeModule {
     hot: {
-      accept (path?: string, callback?: () => void): void
+      accept(path?: string, callback?: () => void): void
     }
   }
 }
 
-async function run () {
+async function run() {
   const replaceApp = await Server.main()
 
   if (module.hot) {

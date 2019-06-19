@@ -3,7 +3,9 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 export namespace Database {
-  export const url = process.env.DATABASE_URL || 'postgres://unicorn_root:password@localhost:5432/unicorn'
+  export const url =
+    process.env.DATABASE_URL ||
+    'postgres://unicorn_root:password@localhost:5432/unicorn'
 }
 
 export namespace Server {
@@ -13,9 +15,13 @@ export namespace Server {
 }
 
 export namespace Auth {
-  export const jwksUri = process.env.AUTH0_JWKS_URI || 'https://space-unicorn.auth0.com/.well-known/jwks.json'
-  export const audience = process.env.AUTH0_AUDIENCE || 'https://unicorn.deterministic.dev'
-  export const issuer = process.env.AUTH0_ISSUER || 'https://space-unicorn.auth0.com/'
+  export const jwksUri =
+    process.env.AUTH0_JWKS_URI ||
+    'https://space-unicorn.auth0.com/.well-known/jwks.json'
+  export const audience =
+    process.env.AUTH0_AUDIENCE || 'https://unicorn.deterministic.dev'
+  export const issuer =
+    process.env.AUTH0_ISSUER || 'https://space-unicorn.auth0.com/'
 }
 
 export namespace Environment {
