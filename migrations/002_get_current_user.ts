@@ -14,7 +14,7 @@ export async function up(knex: Knex) {
       LANGUAGE sql VOLATILE;
 
     COMMENT ON FUNCTION get_current_user IS E'Get or create a user based on the logged-in JWT claims.';
-    GRANT EXECUTE ON FUNCTION get_current_user() TO graft_user;
+    GRANT EXECUTE ON FUNCTION get_current_user() TO unicorn_user;
   `)
 }
 

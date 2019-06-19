@@ -27,10 +27,10 @@ export async function up(knex: Knex) {
   await knex.raw(
     `ALTER DEFAULT PRIVILEGES REVOKE EXECUTE ON FUNCTIONS FROM public;`
   )
-  await knex.raw('DROP ROLE IF EXISTS graft_user;')
-  await knex.raw('CREATE ROLE graft_user;')
-  await knex.raw(`GRANT USAGE ON SCHEMA public TO graft_user;`)
-  await knex.raw(`GRANT graft_user TO graft_root;`)
+  await knex.raw('DROP ROLE IF EXISTS unicorn_user;')
+  await knex.raw('CREATE ROLE unicorn_user;')
+  await knex.raw(`GRANT USAGE ON SCHEMA public TO unicorn_user;`)
+  await knex.raw(`GRANT unicorn_user TO unicorn_root;`)
 
   // user
   await knex.schema.createTable('user', table => {
@@ -57,7 +57,7 @@ export async function up(knex: Knex) {
   await updateTimestamp(knex, 'user')
 
   await knex.raw(
-    `GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE "user" TO graft_user;`
+    `GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE "user" TO unicorn_user;`
   )
   await knex.raw(`ALTER TABLE "user" ENABLE ROW LEVEL SECURITY;`)
 
@@ -97,7 +97,7 @@ export async function up(knex: Knex) {
   await updateTimestamp(knex, 'address')
 
   await knex.raw(
-    `GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE "address" TO graft_user;`
+    `GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE "address" TO unicorn_user;`
   )
 
   // account
@@ -127,7 +127,7 @@ export async function up(knex: Knex) {
   await updateTimestamp(knex, 'account')
 
   await knex.raw(
-    `GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE "account" TO graft_user;`
+    `GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE "account" TO unicorn_user;`
   )
   await knex.raw(`ALTER TABLE "account" ENABLE ROW LEVEL SECURITY;`)
 
