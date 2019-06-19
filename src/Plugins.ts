@@ -5,7 +5,7 @@ import {GraphQLErrorExtended} from 'postgraphile'
 
 import {Environment} from './Config'
 
-const debug = Debug('space-unicorn:Plugins')
+const debug = Debug('@space-unicorn/api:Plugins')
 
 export async function pgSettings(req: Request) {
   const sub = req.user && req.user.sub

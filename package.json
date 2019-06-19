@@ -1,10 +1,10 @@
 {
-  "name": "space-unicorn",
+  "name": "@space-unicorn/api",
   "version": "0.1.0",
   "description": "Space Unicorn",
   "repository": {
     "type": "git",
-    "url": "git@github.com:bkonkle/space-unicorn.git"
+    "url": "git@github.com:bkonkle/space-unicorn-api.git"
   },
   "author": "Brandon Konkle <brandon@konkle.us> (https://deterministic.dev)",
   "license": "MIT",
